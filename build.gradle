@@ -1,0 +1,46 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'java'
+}
+
+group 'com.taahyt'
+version '0.1a'
+
+def projName = 'Phishing-API'
+
+def lombokVersion = '1.18.22'
+def httpCompVersion = '4.5.13'
+def jsonVersion = '20210307'
+
+
+def majorVersion = '0'
+def minorVersion = '0'
+def patchVersion = '1'
+
+def version = String.format('%s.%s.%s', majorVersion, minorVersion, patchVersion)
+
+def fileName = projName + '-' + version
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
+}
+
+repositories {
+    mavenCentral() // for transitive dependencies
+}
+
+dependencies {
+    implementation 'org.apache.httpcomponents:httpclient:' + httpCompVersion
+    implementation 'org.json:json:' + jsonVersion
+
+    compileOnly 'org.projectlombok:lombok:' + lombokVersion
+
+    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
+}
+
+shadowJar {
+    archiveFileName.set(fileName + "." + archiveExtension.get())
+
+}
